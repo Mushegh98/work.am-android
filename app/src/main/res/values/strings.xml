@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Work.am</string>
+    <string name="turnInternet">Please turn on internet connection</string>
+    <string name="cantEmpty">Field can\'t be empty</string>
+    <string name="validEmail">Please enter a valid email address</string>
+    <string name="passwordError">Error: Password length minimum 6 symbol</string>
+    <string name="success">Success</string>
+</resources>
