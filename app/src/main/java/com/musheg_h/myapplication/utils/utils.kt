@@ -7,7 +7,12 @@ import android.net.NetworkInfo
 import android.os.Build
 import android.util.Log
 
+const val BASE_URL = "http://62.89.30.125:8000"
 
+enum class UserType
+{
+    PERSON , COMPANY
+}
 
 fun isNetworkAvailable(context : Context) : Boolean {
 

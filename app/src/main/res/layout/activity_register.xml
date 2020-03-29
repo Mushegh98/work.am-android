@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_login"
+    android:background="#008577"
     tools:context=".activities.MainActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/bgHeader"
         android:layout_width="match_parent"
         android:layout_height="120dp"
-        android:background="@drawable/header_register"
+
         android:theme="@style/AppTheme"
         android:elevation="5dp" />
 
@@ -73,7 +73,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:background="@drawable/background_login"
+                    android:background="@color/colorWhite"
                     android:paddingBottom="50dp">
 
                     <TextView
@@ -81,14 +81,14 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
                         android:text="Email"
-                        android:textColor="@color/colorPurple"
+                        android:textColor="#008577"
                         android:textSize="14sp"
                         android:textStyle="bold" />
 
                     <EditText
                         android:id="@+id/email_text"
                         android:layout_width="match_parent"
-                        android:textColor="@color/colorWhite"
+
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
@@ -99,7 +99,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
                         android:text="Username"
-                        android:textColor="@color/colorPurple"
+                        android:textColor="#008577"
                         android:textSize="14sp"
                         android:textStyle="bold" />
 
@@ -107,17 +107,44 @@
                         android:id="@+id/username"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/colorWhite"
+
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:inputType="text" />
+
+
+                    <RadioGroup
+                        android:id="@+id/button_group_per_or_comp"
+                        android:paddingBottom="10dp"
+                        android:paddingTop="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="10dp"
+                        android:orientation="horizontal">
+                        <RadioButton
+                            android:id="@+id/id_person"
+                            android:shadowColor="@color/colorWhite"
+                            android:layout_width="wrap_content"
+                            android:text="Person"
+                            android:textColor="#008577"
+                            android:layout_height="wrap_content" />
+                        <RadioButton
+                            android:id="@+id/id_company"
+                            android:layout_marginStart="40dp"
+                            android:shadowColor="@color/colorWhite"
+                            android:layout_width="wrap_content"
+                            android:text="Company"
+                            android:textColor="#008577"
+                            android:layout_height="wrap_content" />
+
+                    </RadioGroup>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
                         android:text="Password"
-                        android:textColor="@color/colorPurple"
+                        android:textColor="#008577"
                         android:textSize="14sp"
                         android:textStyle="bold" />
 
@@ -125,7 +152,7 @@
                         android:id="@+id/password"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/colorWhite"
+
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:inputType="textPassword" />
@@ -135,7 +162,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
                         android:text="Confirm Password"
-                        android:textColor="@color/colorPurple"
+                        android:textColor="#008577"
                         android:textSize="14sp"
                         android:textStyle="bold" />
 
@@ -143,7 +170,7 @@
                         android:id="@+id/confirmPassword"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/colorWhite"
+
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:inputType="textPassword" />

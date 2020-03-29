@@ -1,30 +1,30 @@
 package com.musheg_h.myapplication.activities
 
-import android.content.Context
 import android.os.Bundle
-import android.service.autofill.Validators.and
 import android.util.Patterns
 import android.view.MenuItem
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.musheg_h.myapplication.R
+import com.musheg_h.myapplication.models.User
+import com.musheg_h.myapplication.utils.UserType
 import com.musheg_h.myapplication.utils.isNetworkAvailable
+import com.musheg_h.myapplication.viewmodel.UserRegisterViewModel
 import kotlinx.android.synthetic.main.activity_register.*
 
 class RegisterActivity : AppCompatActivity() {
 
-
+    private var userViewModel : UserRegisterViewModel ? = null
     private var animation: Animation? = null
-
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
+
+        userViewModel = UserRegisterViewModel(application)
 
         setSupportActionBar(bgHeader)
         supportActionBar?.title = ""
@@ -38,13 +38,50 @@ class RegisterActivity : AppCompatActivity() {
         email_text.requestFocus()
 
 
+
         buttonSingnup.setOnClickListener {
-            if (validPassword() and validUsername() and validateEmail() and isNetworkAvailable(this)) {
-                Toast.makeText(this, "Success", Toast.LENGTH_LONG).show()
-                finish()
+
+            val isGroupButton : Boolean = button_group_per_or_comp.checkedRadioButtonId != -1
+
+            if (validPassword() and validUsername() and validateEmail() and isNetworkAvailable(this) and isGroupButton ) {
+
+                var status : UserType = UserType.PERSON
+
+                if(button_group_per_or_comp.checkedRadioButtonId == R.id.id_person)
+                {
+                    status = UserType.PERSON
+                }
+               else if(button_group_per_or_comp.checkedRadioButtonId == R.id.id_company)
+                {
+                    status = UserType.COMPANY
+                }
+                    val inputPassword = password.text.toString()
+                    val inputUsername = username.text.toString()
+                    val emailInput = email_text.text.toString().trim()
+                     val user = User(inputUsername , inputPassword , emailInput, status)
+                    userViewModel?.postRegisterUser(user)
+
+                    Toast.makeText(this, "Success", Toast.LENGTH_LONG).show()
+                    finish()
             }
+
+            if(!isGroupButton)
+            {
+                Toast.makeText(
+                        this,
+                        "Select Person or Company",
+                        Toast.LENGTH_LONG
+                    )
+                    .show()
+                return@setOnClickListener
+            }
+
             if (!isNetworkAvailable(this)) {
-                Toast.makeText(this, resources.getString(R.string.turnInternet), Toast.LENGTH_LONG)
+                Toast.makeText(
+                        this,
+                        resources.getString(R.string.turnInternet),
+                        Toast.LENGTH_LONG
+                    )
                     .show()
             }
         }
@@ -124,3 +161,4 @@ class RegisterActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 }
+
