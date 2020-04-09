@@ -20,43 +20,62 @@ object Repository {
     )
 
 
-    fun postLoginUser(user: UserLogin) : LiveData<JwtResponse>
-    {
+    fun postLoginUser(user: UserLogin): LiveData<JwtResponse> {
         val liveData = MutableLiveData<JwtResponse>()
+
         val call: Call<JwtResponse> = apiInterface.postLoginUser(user)
-        call.enqueue((object : Callback<JwtResponse>
-        {
+        call.enqueue((object : Callback<JwtResponse> {
             override fun onFailure(call: Call<JwtResponse>, t: Throwable) {
-                Log.d("TAG",  t.localizedMessage!!)
+                Log.d("TAG", t.localizedMessage!!)
             }
 
-
             override fun onResponse(call: Call<JwtResponse>, response: Response<JwtResponse>) {
-                var code =  response.code()
-                val list: JwtResponse = response.body()!!
+                var code = response.code()
+                val list = response.body()!!
                 liveData.value = list
                 //  insert(list)
             }
-
         }))
         return liveData
     }
 
 
-    fun postRegisterUser(user : User)  : LiveData<User>
-    {
+    fun postRegisterUser(user: User): LiveData<User> {
         val liveData = MutableLiveData<User>()
 
-        val call: Call<User> =  apiInterface.postRegisterUser(user)
+        val call: Call<User> = apiInterface.postRegisterUser(user)
 
         call.enqueue((object : Callback<User> {
             override fun onFailure(call: Call<User>, t: Throwable) {
-                Log.d("TAG",  t.localizedMessage!!)
+                Log.d("TAG", t.localizedMessage!!)
             }
+
             override fun onResponse(call: Call<User>, response: Response<User>) {
-              var code =  response.code()
+                var code = response.code()
                 val list: User = response.body()!!
-                   liveData.value = list
+                liveData.value = list
+                //  insert(list)
+            }
+        }))
+        return liveData
+    }
+
+
+    fun postHelloUser(token: String): LiveData<JwtResponse> {
+        val liveData = MutableLiveData<JwtResponse>()
+        val map = HashMap<String, String>()
+        map.put("Authorization", "Bearer" + " " + token)
+        val call: Call<JwtResponse> = apiInterface.postHelloUser(map)
+
+        call.enqueue((object : Callback<JwtResponse> {
+            override fun onFailure(call: Call<JwtResponse>, t: Throwable) {
+                Log.d("TAG", t.localizedMessage!!)
+            }
+
+            override fun onResponse(call: Call<JwtResponse>, response: Response<JwtResponse>) {
+                var code = response.code()
+                val list: JwtResponse = response.body()!!
+                liveData.value = list
                 //  insert(list)
             }
         }))

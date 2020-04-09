@@ -18,4 +18,7 @@ interface ApiInterface {
     @POST("/authenticate")
     fun postLoginUser(@Body user : UserLogin) : Call<JwtResponse>
 
+    @POST("/hello")
+    fun postHelloUser(@HeaderMap headers :Map<String, String>) : Call<JwtResponse>
+
 }

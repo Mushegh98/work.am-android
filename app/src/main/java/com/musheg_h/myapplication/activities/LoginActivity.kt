@@ -1,18 +1,17 @@
 package com.musheg_h.myapplication.activities
 
 import android.app.ActivityOptions
-import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.view.View
-import android.view.inputmethod.InputMethodManager
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.LifecycleOwner
 import com.musheg_h.myapplication.R
+import com.musheg_h.myapplication.models.JwtResponse
 import com.musheg_h.myapplication.models.UserLogin
 import com.musheg_h.myapplication.viewmodel.UserLoginViewModel
 import kotlinx.android.synthetic.main.activity_login_layout.*
+import java.util.*
 
 class LoginActivity : AppCompatActivity() {
 
@@ -37,13 +36,18 @@ class LoginActivity : AppCompatActivity() {
         }
 
         button_login.setOnClickListener {
+            var token1 : String = ""
             val userName = userNameLogin.text.toString()
             val password = userPasswordlogin.text.toString()
-            var user = UserLogin(username = userName , password = password)
-            userLoginViewModel?.postLoginUser(user)
+            val user = UserLogin(username = userName , password = password)
+
+          userLoginViewModel?.postLoginUser(user)?.observe(this as LifecycleOwner , androidx.lifecycle.Observer {
+              token1 = it.token
+              val intent = Intent(baseContext, NewScreenActivity::class.java)
+              intent.putExtra("token", token1)
+              startActivity(intent)
+          })
         }
 
     }
-
-
 }
