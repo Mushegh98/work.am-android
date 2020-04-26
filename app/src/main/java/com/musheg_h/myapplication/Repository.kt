@@ -3,6 +3,7 @@ package com.musheg_h.myapplication
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.musheg_h.myapplication.models.EmailDTO
 import com.musheg_h.myapplication.models.JwtResponse
 import com.musheg_h.myapplication.models.User
 import com.musheg_h.myapplication.models.UserLogin
@@ -42,7 +43,6 @@ object Repository {
 
     fun postRegisterUser(user: User): LiveData<User> {
         val liveData = MutableLiveData<User>()
-
         val call: Call<User> = apiInterface.postRegisterUser(user)
 
         call.enqueue((object : Callback<User> {
@@ -81,4 +81,24 @@ object Repository {
         }))
         return liveData
     }
+
+
+    fun postEmail(email: EmailDTO): LiveData<EmailDTO> {
+        val liveData = MutableLiveData<EmailDTO>()
+        val call: Call<EmailDTO> = apiInterface.postEmailUser(email)
+        call.enqueue((object : Callback<EmailDTO> {
+            override fun onFailure(call: Call<EmailDTO>, t: Throwable) {
+                Log.d("TAG", t.localizedMessage!!)
+            }
+
+            override fun onResponse(call: Call<EmailDTO>, response: Response<EmailDTO>) {
+                var code = response.code()
+                val email: EmailDTO = response.body()!!
+                liveData.value = email
+                //  insert(list)
+            }
+        }))
+        return liveData
+    }
+
 }

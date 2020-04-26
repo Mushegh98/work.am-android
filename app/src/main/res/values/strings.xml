@@ -4,5 +4,8 @@
     <string name="cantEmpty">Field can\'t be empty</string>
     <string name="validEmail">Please enter a valid email address</string>
     <string name="passwordError">Error: Password length minimum 6 symbol</string>
+    <string name="companyName">Company Name</string>
     <string name="success">Success</string>
+    <string name="userName">Username</string>
+    <string name="upload_image">Upload Image</string>
 </resources>
