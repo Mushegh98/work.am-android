@@ -32,34 +32,8 @@ class RegisterActivity : AppCompatActivity() {
 
     private var userViewModel: UserRegisterViewModel? = null
     private var animation: Animation? = null
-    private var RESULT_LOAD_IMG: Int = 123
-    private var imageFlag = false
-    private var emailFlag = true
 
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (resultCode == RESULT_OK) {
-            if (requestCode == RESULT_LOAD_IMG) {
-                try {
-                    val imageUri: Uri? = data?.data
-                    val imageStream: InputStream? = contentResolver.openInputStream(imageUri!!)
-                    val selectedImage: Bitmap = BitmapFactory.decodeStream(imageStream)
-                    val d: Drawable = BitmapDrawable(resources, selectedImage)
-                    uploadButtonImage.text = ""
-                    uploadButtonImage.background = d
-                    imageFlag = true
-                } catch (e: FileNotFoundException) {
-                    e.printStackTrace()
-                    Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG).show()
-                }
-            }
-        } else {
-            Toast.makeText(this, "You haven't picked Image", Toast.LENGTH_LONG).show()
-        }
-
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,7 +48,7 @@ class RegisterActivity : AppCompatActivity() {
             this,
             R.anim.uptodowndiagonal
         )
-        rlayout?.animation = animation
+        rlayoutwork?.animation = animation
 
         email_text.requestFocus()
 
@@ -83,19 +57,10 @@ class RegisterActivity : AppCompatActivity() {
             RadioGroup.OnCheckedChangeListener { group, checkedId ->
                 if (checkedId == R.id.id_person) {
                     usernameTitle.text = getString(R.string.userName)
-                    uploadButtonImage.visibility = View.GONE
                 } else if (checkedId == R.id.id_company) {
                     usernameTitle.text = getString(R.string.companyName)
-                    uploadButtonImage.visibility = View.VISIBLE
                 }
             })
-
-        uploadButtonImage.setOnClickListener {
-            val photoPickerIntent = Intent(Intent.ACTION_PICK)
-            photoPickerIntent.type = "image/*"
-            startActivityForResult(photoPickerIntent, RESULT_LOAD_IMG)
-        }
-
 
 
         buttonSingnup.setOnClickListener {
@@ -110,10 +75,6 @@ class RegisterActivity : AppCompatActivity() {
                     status = UserType.PERSON
                 } else if (button_group_per_or_comp.checkedRadioButtonId == R.id.id_company) {
                     status = UserType.COMPANY
-                    val statusImage = imageValidation()
-                    if (!statusImage) {
-                        return@setOnClickListener
-                    }
                 }
 
 
@@ -127,21 +88,20 @@ class RegisterActivity : AppCompatActivity() {
                     if(emailDTO.email == null)
                     {
                         Toast.makeText(this,"Email or username are exist",Toast.LENGTH_SHORT).show()
-                        emailFlag =false
-                        //TODO 2 hat trichq
                         return@Observer
                     }
+                    else
+                    {
+                        val intent = Intent(baseContext, VerificationActivity::class.java)
+                        intent.putExtra("username", inputUsername)
+                        intent.putExtra("password",inputPassword)
+                        intent.putExtra("email", emailInput)
+                        intent.putExtra("userType",status)
+
+                        startActivity(intent)
+                        finish()
+                    }
                 })
-                //Toast.makeText(this, "Success", Toast.LENGTH_LONG).show()
-                val intent = Intent(baseContext, VerificationActivity::class.java)
-                intent.putExtra("username", inputUsername)
-                intent.putExtra("password",inputPassword)
-                intent.putExtra("email", emailInput)
-                intent.putExtra("userType",status)
-
-
-                startActivity(intent)
-                finish()
             }
 
             if (!isGroupButton) {
@@ -163,15 +123,6 @@ class RegisterActivity : AppCompatActivity() {
                     .show()
             }
         }
-    }
-
-
-    private fun imageValidation(): Boolean {
-        if (!imageFlag) {
-            Toast.makeText(this, "Please upload image", Toast.LENGTH_LONG).show()
-            return false
-        }
-        return true
     }
 
 

@@ -15,6 +15,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".activities.AddWorkActivity"></activity>
+        <activity android:name=".activities.CompanyActivity"
+            android:theme="@style/AppThemeActionBar"/>
         <activity android:name=".activities.VerificationActivity" />
         <activity
             android:name=".activities.MainActivity"
@@ -34,7 +37,8 @@
             android:name=".activities.RegisterActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
-        <activity android:name=".activities.NewScreenActivity" />
+        <activity android:name=".activities.PersonActivity"
+            android:theme="@style/AppThemeActionBar"/>
     </application>
 
 </manifest>

@@ -7,11 +7,10 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LifecycleOwner
 import com.musheg_h.myapplication.R
-import com.musheg_h.myapplication.models.JwtResponse
 import com.musheg_h.myapplication.models.UserLogin
+import com.musheg_h.myapplication.utils.UserType
 import com.musheg_h.myapplication.viewmodel.UserLoginViewModel
 import kotlinx.android.synthetic.main.activity_login_layout.*
-import java.util.*
 
 class LoginActivity : AppCompatActivity() {
 
@@ -39,25 +38,31 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
-//        button_login.setOnClickListener {
-//            var token1 : String = ""
-//            val userName = userNameLogin.text.toString()
-//            val password = userPasswordlogin.text.toString()
-//            val user = UserLogin(username = userName , password = password)
-//
-//          userLoginViewModel?.postLoginUser(user)?.observe(this as LifecycleOwner , androidx.lifecycle.Observer {
-//              token1 = it.token
-//              val intent = Intent(baseContext, NewScreenActivity::class.java)
-//              intent.putExtra("token", token1)
-//              startActivity(intent)
-//          })
-//        }
-
         button_login.setOnClickListener {
-            val intent = Intent(baseContext, NewScreenActivity::class.java)
-            intent.putExtra("token", "token1")
-            startActivity(intent)
-        }
+            var token : String = ""
+            val userName = userNameLogin.text.toString()
+            val password = userPasswordlogin.text.toString()
+            val user = UserLogin(username = userName , password = password)
 
+          userLoginViewModel?.postLoginUser(user,baseContext)?.observe(this as LifecycleOwner , androidx.lifecycle.Observer {
+
+              if(it.userType == UserType.COMPANY)
+              {
+                  val intent = Intent(baseContext, CompanyActivity::class.java)
+                  intent.putExtra("token", it.token)
+                  intent.putExtra("userType",it.userType)
+                  intent.putExtra("userName",it.username)
+                  startActivity(intent)
+              }
+              else if(it.userType == UserType.PERSON)
+              {
+                  val intent = Intent(baseContext, PersonActivity::class.java)
+                  intent.putExtra("token", it.token)
+                  intent.putExtra("userType",it.userType)
+                  intent.putExtra("userName",it.username)
+                  startActivity(intent)
+              }
+          })
+        }
     }
 }

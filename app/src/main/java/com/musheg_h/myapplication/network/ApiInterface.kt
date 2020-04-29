@@ -1,9 +1,6 @@
 package com.musheg_h.myapplication.network
 
-import com.musheg_h.myapplication.models.EmailDTO
-import com.musheg_h.myapplication.models.JwtResponse
-import com.musheg_h.myapplication.models.User
-import com.musheg_h.myapplication.models.UserLogin
+import com.musheg_h.myapplication.models.*
 
 import retrofit2.Call
 import retrofit2.http.*
@@ -23,5 +20,14 @@ interface ApiInterface {
 
     @POST("/verification_code")
     fun postEmailUser(@Body email : EmailDTO) : Call<EmailDTO>
+
+    @POST("/addPost")
+    fun postAddWork(@HeaderMap headers :Map<String, String> ,@Body postDTO: PostDTO) : Call<DAOPost>
+
+    @POST("/postListCompany")
+    fun postListCompany(@HeaderMap headers: Map<String, String>, @Body pageDTO : PageDTO) : Call<List<DAOPost>>
+
+    @POST("/postListPerson")
+    fun postListPerson(@HeaderMap headers: Map<String, String>, @Body pageDTO : PageDTO) : Call<List<DAOPost>>
 
 }

@@ -14,6 +14,11 @@ enum class UserType
     PERSON , COMPANY
 }
 
+enum class Level
+{
+    JUNIOR, MIDDLE, SENIOR
+}
+
 fun isNetworkAvailable(context : Context) : Boolean {
 
     val connectivityManager : ConnectivityManager  =  context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
